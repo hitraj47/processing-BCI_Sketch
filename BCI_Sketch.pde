@@ -16,6 +16,16 @@ void setup() {
 void draw() {
   drawLineGraph();
   drawBarGraph(); 
+  drawEegValues();
+}
+
+void drawEegValues() {
+  for (int i = 0; i < rawEegValues.size(); i++) {
+    float x = map(i, 0, rawEegValues.size(), 0, width);
+    float y = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
+    y = height/2 - y;
+    
+  }
 }
 
 void drawLineGraph() {
