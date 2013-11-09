@@ -28,6 +28,19 @@ void drawBarGraph() {
     lineX = lineX + lineXamt;
     line(lineX,height/2,lineX,height);
   }
+  
+  float x = 0;
+  
+  float barWidth = lineXamt;
+  for (int i=0;i<11;i++) {
+    color c = color(random(255),random(255),random(255));
+    float barHeight = random(100,150);
+    float y = height - barHeight;
+    Bar bar = new Bar(x,y,barWidth,barHeight);
+    bar.setBarColor(c);
+    bar.display();
+    x = x + lineXamt;
+  }
 }
 
 void loadData() {
