@@ -14,6 +14,8 @@ void draw() {
       //println(jsonObject.getInt("rawEeg"));
     } else if (line.contains("eSense")) {
       JSONObject eSense = JSONObject.parse(line);
+    } else if (line.contains("poorSignalLevel")) {
+      JSONObject jsonObject = JSONObject.parse(line);
     }
   }
   
