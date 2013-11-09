@@ -8,9 +8,6 @@ void setup() {
   neurosky = loadStrings("neurosky.json");
   rawEegValues = new ArrayList<Integer>();
   loadData();
-  for (Integer v : rawEegValues) {
-    println(v);
-  }
 }
 
 void draw() {
@@ -24,10 +21,14 @@ void drawEegValues() {
     float x1 = map(i, 0, rawEegValues.size(), 0, width);
     float y1 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
     y1 = height/2 - y1;
-    i = i+1;
-    float x2 = map(i, 0, rawEegValues.size(), 0, width);
-    float y2 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
-    y2 = height/2 - y2;
+    if ( i + 1 < rawEegValues.size()) {
+      i = i+1;
+      float x2 = map(i, 0, rawEegValues.size(), 0, width);
+      float y2 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
+      y2 = height/2 - y2;
+      stroke(255,0,0);
+      line(x1,y1,x2,y2);
+    }
   }
 }
 
