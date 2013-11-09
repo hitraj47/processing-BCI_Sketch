@@ -1,12 +1,36 @@
 String neurosky[];
 
 void setup() {
-  size(900,700);
+  size(1100,700);
   neurosky = loadStrings("neurosky.json");
+  loadData();
 }
 
 void draw() {
-  
+  drawLineGraph();
+  drawBarGraph(); 
+}
+
+void drawLineGraph() {
+  fill(128,128,128);
+  noStroke();
+  rect(0,0,width,height/2); 
+}
+
+void drawBarGraph() {
+  fill(255,255,255);
+  noStroke();
+  rect(0,height/2,width,height/2);
+  float lineXamt = width/11;
+  float lineX = 0;
+  stroke(200,200,200);
+  for(int i = 0;i<10;i++) {
+    lineX = lineX + lineXamt;
+    line(lineX,height/2,lineX,height);
+  }
+}
+
+void loadData() {
   for (int i = 0; i < neurosky.length; i++) {
     String line = neurosky[i];
     if (line.contains("rawEeg")) {
@@ -18,5 +42,4 @@ void draw() {
       JSONObject jsonObject = JSONObject.parse(line);
     }
   }
-  
 }
