@@ -1,9 +1,16 @@
 String neurosky[];
+int rawEegMin = Integer.MAX_VALUE;
+int rawEegMax = Integer.MIN_VALUE;
+ArrayList<Integer> rawEegValues;
 
 void setup() {
   size(1100,700);
   neurosky = loadStrings("neurosky.json");
+  rawEegValues = new ArrayList<Integer>();
   loadData();
+  for (Integer v : rawEegValues) {
+    println(v);
+  }
 }
 
 void draw() {
@@ -48,7 +55,10 @@ void loadData() {
     String line = neurosky[i];
     if (line.contains("rawEeg")) {
       JSONObject jsonObject = JSONObject.parse(line);
-      //println(jsonObject.getInt("rawEeg"));
+      int rawEeg = jsonObject.getInt("rawEeg");
+      rawEegMin = Math.min(rawEegMin, rawEeg);
+      rawEegMax = Math.max(rawEegMax, rawEeg);
+      rawEegValues.add(rawEeg);
     } else if (line.contains("eSense")) {
       JSONObject eSense = JSONObject.parse(line);
     } else if (line.contains("poorSignalLevel")) {
