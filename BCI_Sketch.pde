@@ -15,8 +15,21 @@ ArrayList<Integer> lowGammaValues;
 ArrayList<Integer> highGammaValues;
 ArrayList<Integer> rawEegValues;
 
+public final color ATTENTION_COLOR = color(96,96,96);
+public final color MEDITATION_COLOR = color(0,0,0);
+public final color DELTA_COLOR = color(255,255,0);
+public final color THETA_COLOR = color(255,0,0);
+public final color LOW_ALPHA_COLOR = color(255,20,147);
+public final color HIGH_ALPHA_COLOR = color(208,32,144);
+public final color LOW_BETA_COLOR = color(186,85,211);
+public final color HIGH_BETA_COLOR = color(160,32,240);
+public final color LOW_GAMMA_COLOR = color(0,191,255);
+public final color HIGH_GAMMA_COLOR = color(25,25,112);
+public final color RAW_EEG_COLOR = color(46,139,87); 
+
 void setup() {
   size(1100, 700);
+  
   neurosky = loadStrings("neurosky.json");
   attentionValues = new ArrayList<Integer>();
   meditationValues = new ArrayList<Integer>();
@@ -49,7 +62,7 @@ void drawEegValues() {
       float x2 = map(i, 0, rawEegValues.size(), 0, width);
       float y2 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
       y2 = height/2 - y2;
-      stroke(255,0,0);
+      stroke(RAW_EEG_COLOR);
       line(x1,y1,x2,y2);
     }
   }
