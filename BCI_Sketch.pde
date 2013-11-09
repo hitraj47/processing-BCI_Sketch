@@ -50,6 +50,14 @@ void draw() {
   drawLineGraph();
   drawBarGraph(); 
   drawEegValues();
+  drawMouseLine();
+}
+
+void drawMouseLine() {
+  if (mouseY < height/2) {
+    stroke(0, 0, 0);
+    line(mouseX, 0, mouseX, height/2);
+  }
 }
 
 void drawEegValues() {
