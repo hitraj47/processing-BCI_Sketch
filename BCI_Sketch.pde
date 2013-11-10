@@ -48,7 +48,8 @@ void setup() {
 
 void draw() {
   drawLineGraph();
-  drawBarGraph(); 
+  drawBarGraph();
+  drawBarLabels(); 
   drawEegValues();
   drawMouseLine();
 }
@@ -74,6 +75,33 @@ void drawEegValues() {
       line(x1,y1,x2,y2);
     }
   }
+}
+
+void drawBarLabels() {
+  ArrayList<String> barLabels = new ArrayList<String>();
+  barLabels.add("Attention");
+  barLabels.add("Meditation");
+  barLabels.add("Delta");
+  barLabels.add("Theta");
+  barLabels.add("Low Alpha");
+  barLabels.add("High Alpha");
+  barLabels.add("Low Beta");
+  barLabels.add("High Beta");
+  barLabels.add("Low Gamma");
+  barLabels.add("High Gamma");
+  barLabels.add("Raw EEG");
+  float widthApart = width/11;
+  float lineX = 0;
+  for (int i=0; i<barLabels.size(); i++){
+      fill(0);
+      String label = barLabels.get(i);
+      float textWidth = textWidth(label);
+      int y = height/2 + 15;
+      float x = ( (lineX + widthApart)-(lineX + textWidth) )/2 + lineX;
+      text(label, x, y);
+      lineX = lineX + widthApart;
+  }
+  
 }
 
 void drawLineGraph() {
