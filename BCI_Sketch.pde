@@ -200,7 +200,7 @@ void drawBarsForData(int _x) {
   // delta
   index = (int) map(_x, 0, width, 0, deltaValues.size());
   int delta = deltaValues.get(index);
-  barHeight = map(meditation, graphMin, graphMax, 0, height/2);
+  barHeight = map(delta, graphMin, graphMax, 0, height/2);
   y = height - barHeight;
   Bar deltaBar = new Bar(x, y, barWidth, barHeight);
   deltaBar.setBarColor(DELTA_COLOR);
