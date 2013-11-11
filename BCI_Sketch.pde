@@ -48,6 +48,17 @@ void setup() {
 
 void draw() {
   drawLineGraph();
+  drawLineOnGraph(attentionValues, ATTENTION_COLOR);
+  drawLineOnGraph(meditationValues, MEDITATION_COLOR);
+  drawLineOnGraph(deltaValues, DELTA_COLOR);
+  drawLineOnGraph(thetaValues, THETA_COLOR);
+  drawLineOnGraph(lowAlphaValues, LOW_ALPHA_COLOR);
+  drawLineOnGraph(highAlphaValues, HIGH_ALPHA_COLOR);
+  drawLineOnGraph(lowBetaValues, LOW_BETA_COLOR);
+  drawLineOnGraph(highBetaValues, HIGH_BETA_COLOR);
+  drawLineOnGraph(lowGammaValues, LOW_GAMMA_COLOR);
+  drawLineOnGraph(highGammaValues, HIGH_GAMMA_COLOR);
+  drawLineOnGraph(rawEegValues, RAW_EEG_COLOR);
   drawBarGraph();
   drawBarLabels(); 
   drawMouseLine();
@@ -79,9 +90,8 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       y2 = height/2 - y2;
       stroke(lineColor);
       line(x1,y1,x2,y2);
-    } else {
-      stroke(lineColor);
-      line(prevx,prevy,x1,y1);
+      prevx = x2;
+      prevy = y2;
     }
   }
     
@@ -155,8 +165,7 @@ void loadData() {
       graphMin = Math.min(graphMin, rawEeg);
       graphMax = Math.max(graphMax, rawEeg);
       rawEegValues.add(rawEeg);
-    } 
-    else if (line.contains("eSense")) {
+    } else if (line.contains("eSense")) {
       JSONObject jsonObject = JSONObject.parse(line);
       JSONObject eSense = jsonObject.getJSONObject("eSense");
       JSONObject eegPower = jsonObject.getJSONObject("eegPower");
