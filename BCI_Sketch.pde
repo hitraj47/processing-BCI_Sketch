@@ -86,6 +86,8 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
     }
     float y1 = map(values.get(i), graphMin, graphMax, 0, height/2);
     y1 = height/2 - y1;
+    
+    // make sure to connect the previous point with the new point
     if (i > 0) {
       stroke(lineColor);
       line(prevx,prevy,x1,y1);
