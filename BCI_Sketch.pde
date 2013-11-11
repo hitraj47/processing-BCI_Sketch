@@ -1,6 +1,8 @@
 String neurosky[];
 int rawEegMin = Integer.MAX_VALUE;
 int rawEegMax = Integer.MIN_VALUE;
+int graphMax = Integer.MIN_VALUE;
+int graphMin = Integer.MAX_VALUE;
 
 ArrayList<Integer> attentionValues;
 ArrayList<Integer> meditationValues;
@@ -59,6 +61,30 @@ void drawMouseLine() {
     stroke(0, 0, 0);
     line(mouseX, 0, mouseX, height/2);
   }
+}
+
+void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
+  
+  float prevx 0;
+  float prevy = 0;
+  for(int i=0; i < values.size(); i++) {
+    float x1 = map(i, 0, values.size(), 0, width);
+    float y1 = map(values.get(i), graphMin, graphMax, 0, height/2);
+    y1 = height/2 - y1;
+    if (i > 0) {
+      stroke(lineColor);
+      line(prevx,prevy,x1,y1);
+    }
+    if (i+1 < values.size()) {
+      i = i+1;
+      float x2 = map(i, 0, values.size(), 0, width);
+      float y2 = map(values.get(i), graphMin, graphMax, 0, height/2);
+      y2 = height/2 - y2;
+      stroke(lineColor);
+      line(x1,y1,x2,y2);
+    }
+  }
+    
 }
 
 void drawEegValues() {
