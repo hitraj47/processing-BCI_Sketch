@@ -60,7 +60,9 @@ void draw() {
   drawLineOnGraph(highGammaValues, HIGH_GAMMA_COLOR);
   drawLineOnGraph(rawEegValues, RAW_EEG_COLOR);
   drawBarGraph();
-  //drawBarsForData(mouseX);
+  if (mouseY <= height/2) {
+    drawBarsForData(mouseX);
+  }
   drawBarLabels(); 
   drawMouseLine();
 }
@@ -204,6 +206,85 @@ void drawBarsForData(int _x) {
   deltaBar.setBarColor(DELTA_COLOR);
   deltaBar.display();
   x = x + barWidth;
+  
+  // theta
+  index = (int) map(_x, 0, width, 0, thetaValues.size());
+  int theta = thetaValues.get(index);
+  barHeight = map(theta, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar thetaBar = new Bar(x, y, barWidth, barHeight);
+  thetaBar.setBarColor(THETA_COLOR);
+  thetaBar.display();
+  x = x + barWidth;
+  
+  // low alpha
+  index = (int) map(_x, 0, width, 0, lowAlphaValues.size());
+  int lowAlpha = lowAlphaValues.get(index);
+  barHeight = map(lowAlpha, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar lowAlphaBar = new Bar(x, y, barWidth, barHeight);
+  lowAlphaBar.setBarColor(LOW_ALPHA_COLOR);
+  lowAlphaBar.display();
+  x = x + barWidth;
+  
+  // high alpha
+  index = (int) map(_x, 0, width, 0, highAlphaValues.size());
+  int highAlpha = highAlphaValues.get(index);
+  barHeight = map(highAlpha, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar highAlphaBar = new Bar(x, y, barWidth, barHeight);
+  highAlphaBar.setBarColor(HIGH_ALPHA_COLOR);
+  highAlphaBar.display();
+  x = x + barWidth;
+  
+  // low beta
+  index = (int) map(_x, 0, width, 0, lowBetaValues.size());
+  int lowBeta = lowBetaValues.get(index);
+  barHeight = map(lowBeta, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar lowBetaBar = new Bar(x, y, barWidth, barHeight);
+  lowBetaBar.setBarColor(LOW_BETA_COLOR);
+  lowBetaBar.display();
+  x = x + barWidth;
+  
+  // high beta
+  index = (int) map(_x, 0, width, 0, highBetaValues.size());
+  int highBeta = highBetaValues.get(index);
+  barHeight = map(highBeta, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar highBetaBar = new Bar(x, y, barWidth, barHeight);
+  highBetaBar.setBarColor(HIGH_BETA_COLOR);
+  highBetaBar.display();
+  x = x + barWidth;
+  
+  // low gamma
+  index = (int) map(_x, 0, width, 0, lowGammaValues.size());
+  int lowGamma = lowGammaValues.get(index);
+  barHeight = map(lowGamma, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar lowGammaBar = new Bar(x, y, barWidth, barHeight);
+  lowGammaBar.setBarColor(LOW_GAMMA_COLOR);
+  lowGammaBar.display();
+  x = x + barWidth;
+  
+  // high gamma
+  index = (int) map(_x, 0, width, 0, highGammaValues.size());
+  int highGamma = highGammaValues.get(index);
+  barHeight = map(highGamma, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar highGammaBar = new Bar(x, y, barWidth, barHeight);
+  highGammaBar.setBarColor(HIGH_GAMMA_COLOR);
+  highGammaBar.display();
+  x = x + barWidth;
+  
+  // raw eeg
+  index = (int) map(_x, 0, width, 0, rawEegValues.size());
+  int rawEeg = rawEegValues.get(index);
+  barHeight = map(rawEeg, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar rawEegBar = new Bar(x, y, barWidth, barHeight);
+  rawEegBar.setBarColor(RAW_EEG_COLOR);
+  rawEegBar.display();
 }
 
 void loadData() {
