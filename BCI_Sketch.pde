@@ -158,7 +158,13 @@ void loadData() {
       JSONObject jsonObject = JSONObject.parse(line);
       JSONObject eSense = jsonObject.getJSONObject("eSense");
       JSONObject eegPower = jsonObject.getJSONObject("eegPower");
-      poorSignalLevelValues.add(jsonObject.getInt("poorSignalLevel"));
+      
+      int poorSignalLevel = jsonObject.getInt("poorSignalLevel");
+      poorSignalLevelValues.add(poorSignalLevel);
+      graphMin = Math.min(graphMin, poorSignalLevel);
+      graphMax = Math.max(graphMax, poorSignalLevel);
+      
+      
       attentionValues.add(eSense.getInt("attention"));
       meditationValues.add(eSense.getInt("meditation"));
       deltaValues.add(eegPower.getInt("delta"));
