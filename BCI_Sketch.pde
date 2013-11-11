@@ -361,8 +361,6 @@ void loadData() {
       JSONObject jsonObject = JSONObject.parse(line);
       int poorSignalLevel = jsonObject.getInt("poorSignalLevel");
       poorSignalLevelValues.add(poorSignalLevel);
-      graphMin = Math.min(graphMin, poorSignalLevel);
-      graphMax = Math.max(graphMax, poorSignalLevel);
     }
   }
 }
