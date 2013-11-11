@@ -92,6 +92,12 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       line(x1,y1,x2,y2);
       prevx = x2;
       prevy = y2;
+    } else {
+      float x2 = map(i+1, 0, values.size(), 0, width);
+      float y2 = map(values.get(i), graphMin, graphMax, 0, height/2);
+      y2 = height/2 - y2;
+      stroke(lineColor);
+      line(x1,y1,x2,y2);
     }
   }
     
