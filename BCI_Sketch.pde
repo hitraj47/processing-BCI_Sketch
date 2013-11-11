@@ -76,7 +76,14 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
   float prevx = 0;
   float prevy = 0;
   for(int i=0; i < values.size(); i++) {
-    float x1 = map(i, 0, values.size(), 0, width);
+    float x1;
+    // check to see if last value, if so, add 1 to i so it displays
+    // at the end of the graph
+    if (i+1 == values.size()) {
+      x1 = map(i+1, 0, values.size(), 0, width);
+    } else {
+      x1 = map(i, 0, values.size(), 0, width);
+    }
     float y1 = map(values.get(i), graphMin, graphMax, 0, height/2);
     y1 = height/2 - y1;
     if (i > 0) {
@@ -92,12 +99,6 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       line(x1,y1,x2,y2);
       prevx = x2;
       prevy = y2;
-    } else {
-      float x2 = map(i+1, 0, values.size(), 0, width);
-      float y2 = map(values.get(i), graphMin, graphMax, 0, height/2);
-      y2 = height/2 - y2;
-      stroke(lineColor);
-      line(x1,y1,x2,y2);
     }
   }
     
