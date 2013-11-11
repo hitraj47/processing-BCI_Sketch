@@ -87,22 +87,6 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
     
 }
 
-void drawEegValues() {
-  for (int i = 0; i < rawEegValues.size(); i++) {
-    float x1 = map(i, 0, rawEegValues.size(), 0, width);
-    float y1 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
-    y1 = height/2 - y1;
-    if ( i + 1 < rawEegValues.size()) {
-      i = i+1;
-      float x2 = map(i, 0, rawEegValues.size(), 0, width);
-      float y2 = map(rawEegValues.get(i), rawEegMin, rawEegMax, 0, height/2);
-      y2 = height/2 - y2;
-      stroke(RAW_EEG_COLOR);
-      line(x1,y1,x2,y2);
-    }
-  }
-}
-
 void drawBarLabels() {
   ArrayList<String> barLabels = new ArrayList<String>();
   barLabels.add("Attention");
