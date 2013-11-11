@@ -1,6 +1,4 @@
 String neurosky[];
-int rawEegMin = Integer.MAX_VALUE;
-int rawEegMax = Integer.MIN_VALUE;
 int graphMax = Integer.MIN_VALUE;
 int graphMin = Integer.MAX_VALUE;
 
@@ -152,8 +150,8 @@ void loadData() {
     if (line.contains("rawEeg")) {
       JSONObject jsonObject = JSONObject.parse(line);
       int rawEeg = jsonObject.getInt("rawEeg");
-      rawEegMin = Math.min(rawEegMin, rawEeg);
-      rawEegMax = Math.max(rawEegMax, rawEeg);
+      graphMin = Math.min(graphMin, rawEeg);
+      graphMax = Math.max(graphMax, rawEeg);
       rawEegValues.add(rawEeg);
     } 
     else if (line.contains("eSense")) {
