@@ -60,6 +60,7 @@ void draw() {
   drawLineOnGraph(highGammaValues, HIGH_GAMMA_COLOR);
   drawLineOnGraph(rawEegValues, RAW_EEG_COLOR);
   drawBarGraph();
+  //drawBarsForData(mouseX);
   drawBarLabels(); 
   drawMouseLine();
 }
@@ -153,16 +154,56 @@ void drawBarGraph() {
 
   float x = 0;
 
+  /*
   float barWidth = lineXamt;
   for (int i=0;i<11;i++) {
     color c = color(random(255), random(255), random(255));
-    float barHeight = random(100, 150);
+    float barHeight = 300;
     float y = height - barHeight;
     Bar bar = new Bar(x, y, barWidth, barHeight);
     bar.setBarColor(c);
     bar.display();
     x = x + lineXamt;
   }
+  */
+}
+
+void drawBarsForData(int _x) {
+  float barWidth = width/11;
+  float x = 0;
+  int index = 0;
+  float barHeight = 0;
+  float y = 0;
+  
+  // draw attention bar
+  index = (int) map(_x, 0, width, 0, attentionValues.size());
+  int attention = attentionValues.get(index);
+  barHeight = map(attention, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar attentionBar = new Bar(x, y, barWidth, barHeight);
+  attentionBar.setBarColor(ATTENTION_COLOR);
+  attentionBar.display();
+  x = x + barWidth;
+  
+  // meditation bar
+  index = (int) map(_x, 0, width, 0, meditationValues.size());
+  int meditation = meditationValues.get(index);
+  barHeight = map(meditation, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar meditationBar = new Bar(x, y, barWidth, barHeight);
+  meditationBar.setBarColor(MEDITATION_COLOR);
+  meditationBar.display();
+  x = x + barWidth;
+  
+  // delta
+  index = (int) map(_x, 0, width, 0, deltaValues.size());
+  int delta = deltaValues.get(index);
+  barHeight = map(meditation, graphMin, graphMax, 0, height/2);
+  y = height - barHeight;
+  Bar deltaBar = new Bar(x, y, barWidth, barHeight);
+  deltaBar.setBarColor(DELTA_COLOR);
+  deltaBar.display();
+  x = x + barWidth;
 }
 
 void loadData() {
