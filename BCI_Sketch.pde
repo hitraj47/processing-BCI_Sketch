@@ -50,7 +50,6 @@ void draw() {
   drawLineGraph();
   drawBarGraph();
   drawBarLabels(); 
-  drawEegValues();
   drawMouseLine();
 }
 
@@ -63,7 +62,7 @@ void drawMouseLine() {
 
 void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
   
-  float prevx 0;
+  float prevx = 0;
   float prevy = 0;
   for(int i=0; i < values.size(); i++) {
     float x1 = map(i, 0, values.size(), 0, width);
@@ -80,6 +79,9 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       y2 = height/2 - y2;
       stroke(lineColor);
       line(x1,y1,x2,y2);
+    } else {
+      stroke(lineColor);
+      line(prevx,prevy,x1,y1);
     }
   }
     
@@ -164,21 +166,63 @@ void loadData() {
       graphMin = Math.min(graphMin, poorSignalLevel);
       graphMax = Math.max(graphMax, poorSignalLevel);
       
+      int attention = eSense.getInt("attention");
+      attentionValues.add(attention);
+      graphMin = Math.min(graphMin, attention);
+      graphMax = Math.max(graphMax, attention);
       
-      attentionValues.add(eSense.getInt("attention"));
-      meditationValues.add(eSense.getInt("meditation"));
-      deltaValues.add(eegPower.getInt("delta"));
-      thetaValues.add(eegPower.getInt("theta"));
-      lowAlphaValues.add(eegPower.getInt("lowAlpha"));
-      highAlphaValues.add(eegPower.getInt("highAlpha"));
-      lowBetaValues.add(eegPower.getInt("lowBeta"));
-      highBetaValues.add(eegPower.getInt("highBeta"));
-      lowGammaValues.add(eegPower.getInt("lowGamma"));
-      highGammaValues.add(eegPower.getInt("highGamma"));
+      int meditation = eSense.getInt("meditation");
+      meditationValues.add(meditation);
+      graphMin = Math.min(graphMin, meditation);
+      graphMax = Math.max(graphMax, meditation);
+      
+      int delta = eegPower.getInt("delta");
+      deltaValues.add(delta);
+      graphMin = Math.min(graphMin, delta);
+      graphMax = Math.max(graphMax, delta);
+      
+      int theta = eegPower.getInt("theta");
+      thetaValues.add(theta);
+      graphMin = Math.min(graphMin, theta);
+      graphMax = Math.max(graphMax, theta);
+      
+      int lowAlpha = eegPower.getInt("lowAlpha");
+      lowAlphaValues.add(lowAlpha);
+      graphMin = Math.min(graphMin, lowAlpha);
+      graphMax = Math.max(graphMax, lowAlpha);
+      
+      int highAlpha = eegPower.getInt("highAlpha");
+      highAlphaValues.add(highAlpha);
+      graphMin = Math.min(graphMin, highAlpha);
+      graphMax = Math.max(graphMax, highAlpha);
+      
+      int lowBeta = eegPower.getInt("lowBeta");
+      lowBetaValues.add(lowBeta);
+      graphMin = Math.min(graphMin, lowBeta);
+      graphMax = Math.max(graphMax, lowBeta);
+      
+      int highBeta = eegPower.getInt("highBeta");
+      highBetaValues.add(highBeta);
+      graphMin = Math.min(graphMin, highBeta);
+      graphMax = Math.max(graphMax, highBeta);
+      
+      int lowGamma = eegPower.getInt("lowGamma");
+      lowGammaValues.add(lowGamma);
+      graphMin = Math.min(graphMin, lowGamma);
+      graphMax = Math.max(graphMax, lowGamma);
+      
+      int highGamma = eegPower.getInt("highGamma");
+      highGammaValues.add(highGamma);
+      graphMin = Math.min(graphMin, highGamma);
+      graphMax = Math.max(graphMax, highGamma);
+      
     } 
     else if (line.contains("poorSignalLevel") && !line.contains("eSense") ) {
       JSONObject jsonObject = JSONObject.parse(line);
-      poorSignalLevelValues.add(jsonObject.getInt("poorSignalLevel"));
+      int poorSignalLevel = jsonObject.getInt("poorSignalLevel");
+      poorSignalLevelValues.add(poorSignalLevel);
+      graphMin = Math.min(graphMin, poorSignalLevel);
+      graphMax = Math.max(graphMax, poorSignalLevel);
     }
   }
 }
