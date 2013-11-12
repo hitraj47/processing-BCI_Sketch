@@ -16,7 +16,7 @@ ArrayList<Integer> highGammaValues;
 ArrayList<Integer> rawEegValues;
 
 public final color ATTENTION_COLOR = color(96,96,96);
-public final color MEDITATION_COLOR = color(0,0,0);
+public final color MEDITATION_COLOR = color(255,69,0);
 public final color DELTA_COLOR = color(255,255,0);
 public final color THETA_COLOR = color(255,0,0);
 public final color LOW_ALPHA_COLOR = color(255,20,147);
