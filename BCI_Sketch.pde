@@ -1,6 +1,6 @@
+import java.util.Collections;
+
 String neurosky[];
-int graphMax = Integer.MIN_VALUE;
-int graphMin = Integer.MAX_VALUE;
 
 ArrayList<Integer> attentionValues;
 ArrayList<Integer> meditationValues;
@@ -78,6 +78,8 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
   
   float prevx = 0;
   float prevy = 0;
+  float min = Collections.min(values);
+  float max = Collections.max(values);
   for(int i=0; i < values.size(); i++) {
     float x1;
     // check to see if last value, if so, add 1 to i so it displays
@@ -87,7 +89,7 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
     } else {
       x1 = map(i, 0, values.size(), 0, width);
     }
-    float y1 = map(values.get(i), graphMin, graphMax, 0, height/2);
+    float y1 = map(values.get(i), min, max, 0, height/2);
     y1 = height/2 - y1;
     
     // make sure to connect the previous point with the new point
@@ -98,7 +100,7 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
     if (i+1 < values.size()) {
       i = i+1;
       float x2 = map(i, 0, values.size(), 0, width);
-      float y2 = map(values.get(i), graphMin, graphMax, 0, height/2);
+      float y2 = map(values.get(i), min, max, 0, height/2);
       y2 = height/2 - y2;
       stroke(lineColor);
       line(x1,y1,x2,y2);
@@ -153,21 +155,6 @@ void drawBarGraph() {
     lineX = lineX + lineXamt;
     line(lineX, height/2, lineX, height);
   }
-
-  float x = 0;
-
-  /*
-  float barWidth = lineXamt;
-  for (int i=0;i<11;i++) {
-    color c = color(random(255), random(255), random(255));
-    float barHeight = 300;
-    float y = height - barHeight;
-    Bar bar = new Bar(x, y, barWidth, barHeight);
-    bar.setBarColor(c);
-    bar.display();
-    x = x + lineXamt;
-  }
-  */
 }
 
 void drawBarsForData(int _x) {
@@ -180,7 +167,7 @@ void drawBarsForData(int _x) {
   // draw attention bar
   index = (int) map(_x, 0, width, 0, attentionValues.size());
   int attention = attentionValues.get(index);
-  barHeight = map(attention, graphMin, graphMax, 0, height/2);
+  barHeight = map(attention, Collections.min(attentionValues), Collections.max(attentionValues), 0, height/2);
   y = height - barHeight;
   Bar attentionBar = new Bar(x, y, barWidth, barHeight);
   attentionBar.setBarColor(ATTENTION_COLOR);
@@ -190,7 +177,7 @@ void drawBarsForData(int _x) {
   // meditation bar
   index = (int) map(_x, 0, width, 0, meditationValues.size());
   int meditation = meditationValues.get(index);
-  barHeight = map(meditation, graphMin, graphMax, 0, height/2);
+  barHeight = map(meditation, Collections.min(meditationValues), Collections.max(meditationValues), 0, height/2);
   y = height - barHeight;
   Bar meditationBar = new Bar(x, y, barWidth, barHeight);
   meditationBar.setBarColor(MEDITATION_COLOR);
@@ -200,7 +187,7 @@ void drawBarsForData(int _x) {
   // delta
   index = (int) map(_x, 0, width, 0, deltaValues.size());
   int delta = deltaValues.get(index);
-  barHeight = map(delta, graphMin, graphMax, 0, height/2);
+  barHeight = map(delta, Collections.min(deltaValues), Collections.max(deltaValues), 0, height/2);
   y = height - barHeight;
   Bar deltaBar = new Bar(x, y, barWidth, barHeight);
   deltaBar.setBarColor(DELTA_COLOR);
@@ -210,7 +197,7 @@ void drawBarsForData(int _x) {
   // theta
   index = (int) map(_x, 0, width, 0, thetaValues.size());
   int theta = thetaValues.get(index);
-  barHeight = map(theta, graphMin, graphMax, 0, height/2);
+  barHeight = map(theta, Collections.min(thetaValues), Collections.max(thetaValues), 0, height/2);
   y = height - barHeight;
   Bar thetaBar = new Bar(x, y, barWidth, barHeight);
   thetaBar.setBarColor(THETA_COLOR);
@@ -220,7 +207,7 @@ void drawBarsForData(int _x) {
   // low alpha
   index = (int) map(_x, 0, width, 0, lowAlphaValues.size());
   int lowAlpha = lowAlphaValues.get(index);
-  barHeight = map(lowAlpha, graphMin, graphMax, 0, height/2);
+  barHeight = map(lowAlpha, Collections.min(lowAlphaValues), Collections.max(lowAlphaValues), 0, height/2);
   y = height - barHeight;
   Bar lowAlphaBar = new Bar(x, y, barWidth, barHeight);
   lowAlphaBar.setBarColor(LOW_ALPHA_COLOR);
@@ -230,7 +217,7 @@ void drawBarsForData(int _x) {
   // high alpha
   index = (int) map(_x, 0, width, 0, highAlphaValues.size());
   int highAlpha = highAlphaValues.get(index);
-  barHeight = map(highAlpha, graphMin, graphMax, 0, height/2);
+  barHeight = map(highAlpha, Collections.min(highAlphaValues), Collections.max(highAlphaValues), 0, height/2);
   y = height - barHeight;
   Bar highAlphaBar = new Bar(x, y, barWidth, barHeight);
   highAlphaBar.setBarColor(HIGH_ALPHA_COLOR);
@@ -240,7 +227,7 @@ void drawBarsForData(int _x) {
   // low beta
   index = (int) map(_x, 0, width, 0, lowBetaValues.size());
   int lowBeta = lowBetaValues.get(index);
-  barHeight = map(lowBeta, graphMin, graphMax, 0, height/2);
+  barHeight = map(lowBeta, Collections.min(lowBetaValues), Collections.max(lowBetaValues), 0, height/2);
   y = height - barHeight;
   Bar lowBetaBar = new Bar(x, y, barWidth, barHeight);
   lowBetaBar.setBarColor(LOW_BETA_COLOR);
@@ -250,7 +237,7 @@ void drawBarsForData(int _x) {
   // high beta
   index = (int) map(_x, 0, width, 0, highBetaValues.size());
   int highBeta = highBetaValues.get(index);
-  barHeight = map(highBeta, graphMin, graphMax, 0, height/2);
+  barHeight = map(highBeta, Collections.min(highBetaValues), Collections.max(highBetaValues), 0, height/2);
   y = height - barHeight;
   Bar highBetaBar = new Bar(x, y, barWidth, barHeight);
   highBetaBar.setBarColor(HIGH_BETA_COLOR);
@@ -260,7 +247,7 @@ void drawBarsForData(int _x) {
   // low gamma
   index = (int) map(_x, 0, width, 0, lowGammaValues.size());
   int lowGamma = lowGammaValues.get(index);
-  barHeight = map(lowGamma, graphMin, graphMax, 0, height/2);
+  barHeight = map(lowGamma, Collections.min(lowGammaValues), Collections.max(lowGammaValues), 0, height/2);
   y = height - barHeight;
   Bar lowGammaBar = new Bar(x, y, barWidth, barHeight);
   lowGammaBar.setBarColor(LOW_GAMMA_COLOR);
@@ -270,7 +257,7 @@ void drawBarsForData(int _x) {
   // high gamma
   index = (int) map(_x, 0, width, 0, highGammaValues.size());
   int highGamma = highGammaValues.get(index);
-  barHeight = map(highGamma, graphMin, graphMax, 0, height/2);
+  barHeight = map(highGamma, Collections.min(highGammaValues), Collections.max(highGammaValues), 0, height/2);
   y = height - barHeight;
   Bar highGammaBar = new Bar(x, y, barWidth, barHeight);
   highGammaBar.setBarColor(HIGH_GAMMA_COLOR);
@@ -280,7 +267,7 @@ void drawBarsForData(int _x) {
   // raw eeg
   index = (int) map(_x, 0, width, 0, rawEegValues.size());
   int rawEeg = rawEegValues.get(index);
-  barHeight = map(rawEeg, graphMin, graphMax, 0, height/2);
+  barHeight = map(rawEeg, Collections.min(rawEegValues), Collections.max(rawEegValues), 0, height/2);
   y = height - barHeight;
   Bar rawEegBar = new Bar(x, y, barWidth, barHeight);
   rawEegBar.setBarColor(RAW_EEG_COLOR);
@@ -293,8 +280,6 @@ void loadData() {
     if (line.contains("rawEeg")) {
       JSONObject jsonObject = JSONObject.parse(line);
       int rawEeg = jsonObject.getInt("rawEeg");
-      graphMin = Math.min(graphMin, rawEeg);
-      graphMax = Math.max(graphMax, rawEeg);
       rawEegValues.add(rawEeg);
     } else if (line.contains("eSense")) {
       JSONObject jsonObject = JSONObject.parse(line);
@@ -303,58 +288,36 @@ void loadData() {
       
       int poorSignalLevel = jsonObject.getInt("poorSignalLevel");
       poorSignalLevelValues.add(poorSignalLevel);
-      graphMin = Math.min(graphMin, poorSignalLevel);
-      graphMax = Math.max(graphMax, poorSignalLevel);
       
       int attention = eSense.getInt("attention");
       attentionValues.add(attention);
-      graphMin = Math.min(graphMin, attention);
-      graphMax = Math.max(graphMax, attention);
       
       int meditation = eSense.getInt("meditation");
       meditationValues.add(meditation);
-      graphMin = Math.min(graphMin, meditation);
-      graphMax = Math.max(graphMax, meditation);
       
       int delta = eegPower.getInt("delta");
       deltaValues.add(delta);
-      graphMin = Math.min(graphMin, delta);
-      graphMax = Math.max(graphMax, delta);
       
       int theta = eegPower.getInt("theta");
       thetaValues.add(theta);
-      graphMin = Math.min(graphMin, theta);
-      graphMax = Math.max(graphMax, theta);
       
       int lowAlpha = eegPower.getInt("lowAlpha");
       lowAlphaValues.add(lowAlpha);
-      graphMin = Math.min(graphMin, lowAlpha);
-      graphMax = Math.max(graphMax, lowAlpha);
       
       int highAlpha = eegPower.getInt("highAlpha");
       highAlphaValues.add(highAlpha);
-      graphMin = Math.min(graphMin, highAlpha);
-      graphMax = Math.max(graphMax, highAlpha);
       
       int lowBeta = eegPower.getInt("lowBeta");
       lowBetaValues.add(lowBeta);
-      graphMin = Math.min(graphMin, lowBeta);
-      graphMax = Math.max(graphMax, lowBeta);
       
       int highBeta = eegPower.getInt("highBeta");
       highBetaValues.add(highBeta);
-      graphMin = Math.min(graphMin, highBeta);
-      graphMax = Math.max(graphMax, highBeta);
       
       int lowGamma = eegPower.getInt("lowGamma");
       lowGammaValues.add(lowGamma);
-      graphMin = Math.min(graphMin, lowGamma);
-      graphMax = Math.max(graphMax, lowGamma);
       
       int highGamma = eegPower.getInt("highGamma");
       highGammaValues.add(highGamma);
-      graphMin = Math.min(graphMin, highGamma);
-      graphMax = Math.max(graphMax, highGamma);
       
     } 
     else if (line.contains("poorSignalLevel") && !line.contains("eSense") ) {
