@@ -186,7 +186,7 @@ void drawBarLabels() {
   }  
   barLabels.add(lowAlpha);
   
-  String highAlpha = "High Alpha";
+  String highAlpha = "High Alpha\n";
   if (mouseY<=height/2) {
       highAlpha = highAlpha + getValueLabel(highAlphaValues); 
   }
@@ -216,7 +216,7 @@ void drawBarLabels() {
   }
   barLabels.add(highGamma);
 
-  String rawEeg = "Raw EEG";
+  String rawEeg = "Raw EEG\n";
   if (mouseY<=height/2) {
       rawEeg = rawEeg + getValueLabel(rawEegValues); 
   }
