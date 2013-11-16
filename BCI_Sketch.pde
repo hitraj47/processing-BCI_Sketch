@@ -79,7 +79,7 @@ void drawSignalQuality(int _x) {
   // text
   fill(0,0,0);
   text("Signal", width-w,25);
-  text("Quality %", width-w,45);
+  text("Quality", width-w,45);
   
   // circle thingy
   noFill();
@@ -90,17 +90,13 @@ void drawSignalQuality(int _x) {
   int index = (int) map(_x,0, width, 0, poorSignalLevelValues.size());
   int max = Collections.max(poorSignalLevelValues);
   int min = Collections.min(poorSignalLevelValues);
-  int signalLevel = poorSignalLevelValues.get(index);
-  float signalPercent = signalLevel/max;
-  signalPercent = 1 - signalPercent;
-  float angle = 360*signalPercent;
-  arc(width-35,30,d,d,radians(-90),radians(angle-90));
-  
-  // text
-  String percent = nf((int)signalPercent*100,0,1);
-  textAlign(CENTER,CENTER);
-  text(percent,width-35,30);
-  textAlign(LEFT,BASELINE);
+  int signalLevel = max - poorSignalLevelValues.get(index);
+  if (signalLevel > 25) {
+    fill(0,255,0);
+  } else {
+    fill(255,0,0);
+  }
+  ellipse(width-35,30,d,d);
 }
 
 void drawMouseLine() {
