@@ -15,21 +15,21 @@ ArrayList<Integer> lowGammaValues;
 ArrayList<Integer> highGammaValues;
 ArrayList<Integer> rawEegValues;
 
-public final color ATTENTION_COLOR = color(96,96,96);
-public final color MEDITATION_COLOR = color(255,69,0);
-public final color DELTA_COLOR = color(255,255,0);
-public final color THETA_COLOR = color(255,0,0);
-public final color LOW_ALPHA_COLOR = color(255,20,147);
-public final color HIGH_ALPHA_COLOR = color(208,32,144);
-public final color LOW_BETA_COLOR = color(186,85,211);
-public final color HIGH_BETA_COLOR = color(160,32,240);
-public final color LOW_GAMMA_COLOR = color(0,191,255);
-public final color HIGH_GAMMA_COLOR = color(25,25,112);
-public final color RAW_EEG_COLOR = color(46,139,87); 
+public final color ATTENTION_COLOR = color(96, 96, 96);
+public final color MEDITATION_COLOR = color(255, 69, 0);
+public final color DELTA_COLOR = color(255, 255, 0);
+public final color THETA_COLOR = color(255, 0, 0);
+public final color LOW_ALPHA_COLOR = color(255, 20, 147);
+public final color HIGH_ALPHA_COLOR = color(208, 32, 144);
+public final color LOW_BETA_COLOR = color(186, 85, 211);
+public final color HIGH_BETA_COLOR = color(160, 32, 240);
+public final color LOW_GAMMA_COLOR = color(0, 191, 255);
+public final color HIGH_GAMMA_COLOR = color(25, 25, 112);
+public final color RAW_EEG_COLOR = color(46, 139, 87); 
 
 void setup() {
   size(1100, 700);
-  
+
   neurosky = loadStrings("neurosky.json");
   attentionValues = new ArrayList<Integer>();
   meditationValues = new ArrayList<Integer>();
@@ -75,27 +75,29 @@ void drawMouseLine() {
 }
 
 void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
-  
+
   float prevx = 0;
   float prevy = 0;
   float min = Collections.min(values);
   float max = Collections.max(values);
-  for(int i=0; i < values.size(); i++) {
+  for (int i=0; i < values.size(); i++) {
     float x1;
     // check to see if last value, if so, add 1 to i so it displays
     // at the end of the graph
     if (i+1 == values.size()) {
       x1 = map(i+1, 0, values.size(), 0, width);
-    } else {
+    } 
+    else {
       x1 = map(i, 0, values.size(), 0, width);
     }
     float y1 = map(values.get(i), min, max, 0, height/2);
     y1 = height/2 - y1;
-    
+
     // make sure to connect the previous point with the new point
     if (i > 0) {
       stroke(lineColor);
-      line(prevx,prevy,x1,y1);
+      strokeWeight(1);
+      line(prevx, prevy, x1, y1);
     }
     if (i+1 < values.size()) {
       i = i+1;
@@ -103,12 +105,12 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       float y2 = map(values.get(i), min, max, 0, height/2);
       y2 = height/2 - y2;
       stroke(lineColor);
-      line(x1,y1,x2,y2);
+      strokeWeight(1);
+      line(x1, y1, x2, y2);
       prevx = x2;
       prevy = y2;
     }
   }
-    
 }
 
 void drawBarLabels() {
@@ -126,16 +128,15 @@ void drawBarLabels() {
   barLabels.add("Raw EEG");
   float widthApart = width/11;
   float lineX = 0;
-  for (int i=0; i<barLabels.size(); i++){
-      fill(0);
-      String label = barLabels.get(i);
-      float textWidth = textWidth(label);
-      int y = height/2 + 15;
-      float x = ( (lineX + widthApart)-(lineX + textWidth) )/2 + lineX;
-      text(label, x, y);
-      lineX = lineX + widthApart;
+  for (int i=0; i<barLabels.size(); i++) {
+    fill(0);
+    String label = barLabels.get(i);
+    float textWidth = textWidth(label);
+    int y = height/2 + 15;
+    float x = ( (lineX + widthApart)-(lineX + textWidth) )/2 + lineX;
+    text(label, x, y);
+    lineX = lineX + widthApart;
   }
-  
 }
 
 void drawLineGraph() {
@@ -163,17 +164,23 @@ void drawBarsForData(int _x) {
   int index = 0;
   float barHeight = 0;
   float y = 0;
-  
+
   // draw attention bar
   index = (int) map(_x, 0, width, 0, attentionValues.size());
   int attention = attentionValues.get(index);
   barHeight = map(attention, Collections.min(attentionValues), Collections.max(attentionValues), 0, height/2);
   y = height - barHeight;
-  Bar attentionBar = new Bar(x, y, barWidth, barHeight);
+  Bar attentionBar = new Bar(x, y, barWidth, barHeight);  
   attentionBar.setBarColor(ATTENTION_COLOR);
+  if (attention > 60) {
+    attentionBar.setStroke(true);
+    attentionBar.setStrokeColor(color(255,0,0));
+  } else {
+    attentionBar.setStroke(false); 
+  }
   attentionBar.display();
   x = x + barWidth;
-  
+
   // meditation bar
   index = (int) map(_x, 0, width, 0, meditationValues.size());
   int meditation = meditationValues.get(index);
@@ -181,9 +188,15 @@ void drawBarsForData(int _x) {
   y = height - barHeight;
   Bar meditationBar = new Bar(x, y, barWidth, barHeight);
   meditationBar.setBarColor(MEDITATION_COLOR);
+  if (meditation > 60) {
+    meditationBar.setStroke(true);
+    meditationBar.setStrokeColor(color(255,0,0));
+  } else {
+    meditationBar.setStroke(false);
+  }
   meditationBar.display();
   x = x + barWidth;
-  
+
   // delta
   index = (int) map(_x, 0, width, 0, deltaValues.size());
   int delta = deltaValues.get(index);
@@ -193,7 +206,7 @@ void drawBarsForData(int _x) {
   deltaBar.setBarColor(DELTA_COLOR);
   deltaBar.display();
   x = x + barWidth;
-  
+
   // theta
   index = (int) map(_x, 0, width, 0, thetaValues.size());
   int theta = thetaValues.get(index);
@@ -203,7 +216,7 @@ void drawBarsForData(int _x) {
   thetaBar.setBarColor(THETA_COLOR);
   thetaBar.display();
   x = x + barWidth;
-  
+
   // low alpha
   index = (int) map(_x, 0, width, 0, lowAlphaValues.size());
   int lowAlpha = lowAlphaValues.get(index);
@@ -213,7 +226,7 @@ void drawBarsForData(int _x) {
   lowAlphaBar.setBarColor(LOW_ALPHA_COLOR);
   lowAlphaBar.display();
   x = x + barWidth;
-  
+
   // high alpha
   index = (int) map(_x, 0, width, 0, highAlphaValues.size());
   int highAlpha = highAlphaValues.get(index);
@@ -223,7 +236,7 @@ void drawBarsForData(int _x) {
   highAlphaBar.setBarColor(HIGH_ALPHA_COLOR);
   highAlphaBar.display();
   x = x + barWidth;
-  
+
   // low beta
   index = (int) map(_x, 0, width, 0, lowBetaValues.size());
   int lowBeta = lowBetaValues.get(index);
@@ -233,7 +246,7 @@ void drawBarsForData(int _x) {
   lowBetaBar.setBarColor(LOW_BETA_COLOR);
   lowBetaBar.display();
   x = x + barWidth;
-  
+
   // high beta
   index = (int) map(_x, 0, width, 0, highBetaValues.size());
   int highBeta = highBetaValues.get(index);
@@ -243,7 +256,7 @@ void drawBarsForData(int _x) {
   highBetaBar.setBarColor(HIGH_BETA_COLOR);
   highBetaBar.display();
   x = x + barWidth;
-  
+
   // low gamma
   index = (int) map(_x, 0, width, 0, lowGammaValues.size());
   int lowGamma = lowGammaValues.get(index);
@@ -253,7 +266,7 @@ void drawBarsForData(int _x) {
   lowGammaBar.setBarColor(LOW_GAMMA_COLOR);
   lowGammaBar.display();
   x = x + barWidth;
-  
+
   // high gamma
   index = (int) map(_x, 0, width, 0, highGammaValues.size());
   int highGamma = highGammaValues.get(index);
@@ -263,7 +276,7 @@ void drawBarsForData(int _x) {
   highGammaBar.setBarColor(HIGH_GAMMA_COLOR);
   highGammaBar.display();
   x = x + barWidth;
-  
+
   // raw eeg
   index = (int) map(_x, 0, width, 0, rawEegValues.size());
   int rawEeg = rawEegValues.get(index);
@@ -281,44 +294,44 @@ void loadData() {
       JSONObject jsonObject = JSONObject.parse(line);
       int rawEeg = jsonObject.getInt("rawEeg");
       rawEegValues.add(rawEeg);
-    } else if (line.contains("eSense")) {
+    } 
+    else if (line.contains("eSense")) {
       JSONObject jsonObject = JSONObject.parse(line);
       JSONObject eSense = jsonObject.getJSONObject("eSense");
       JSONObject eegPower = jsonObject.getJSONObject("eegPower");
-      
+
       int poorSignalLevel = jsonObject.getInt("poorSignalLevel");
       poorSignalLevelValues.add(poorSignalLevel);
-      
+
       int attention = eSense.getInt("attention");
       attentionValues.add(attention);
-      
+
       int meditation = eSense.getInt("meditation");
       meditationValues.add(meditation);
-      
+
       int delta = eegPower.getInt("delta");
       deltaValues.add(delta);
-      
+
       int theta = eegPower.getInt("theta");
       thetaValues.add(theta);
-      
+
       int lowAlpha = eegPower.getInt("lowAlpha");
       lowAlphaValues.add(lowAlpha);
-      
+
       int highAlpha = eegPower.getInt("highAlpha");
       highAlphaValues.add(highAlpha);
-      
+
       int lowBeta = eegPower.getInt("lowBeta");
       lowBetaValues.add(lowBeta);
-      
+
       int highBeta = eegPower.getInt("highBeta");
       highBetaValues.add(highBeta);
-      
+
       int lowGamma = eegPower.getInt("lowGamma");
       lowGammaValues.add(lowGamma);
-      
+
       int highGamma = eegPower.getInt("highGamma");
       highGammaValues.add(highGamma);
-      
     } 
     else if (line.contains("poorSignalLevel") && !line.contains("eSense") ) {
       JSONObject jsonObject = JSONObject.parse(line);
