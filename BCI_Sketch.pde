@@ -145,19 +145,83 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
   }
 }
 
+private String getValueLabel(ArrayList<Integer> list) {
+      int index = (int) map(mouseX, 0, width, 0, list.size());
+      int value = list.get(index);
+      int max = Collections.max(list);
+      int min = Collections.min(list);
+      return min + " - " + max + "\n" + value; 
+}
+
 void drawBarLabels() {
   ArrayList<String> barLabels = new ArrayList<String>();
-  barLabels.add("Attention");
-  barLabels.add("Meditation");
-  barLabels.add("Delta");
-  barLabels.add("Theta");
-  barLabels.add("Low Alpha");
-  barLabels.add("High Alpha");
-  barLabels.add("Low Beta");
-  barLabels.add("High Beta");
-  barLabels.add("Low Gamma");
-  barLabels.add("High Gamma");
-  barLabels.add("Raw EEG");
+  
+  String attention = "Attention\n";
+  if (mouseY<=height/2) {
+      attention = attention + getValueLabel(attentionValues); 
+  }
+  barLabels.add(attention);
+  
+  String meditation = "Meditation\n";
+  if (mouseY<=height/2) {
+      meditation = meditation + getValueLabel(meditationValues); 
+  }
+  barLabels.add(meditation);
+  
+  String delta = "Delta\n";
+  if (mouseY<=height/2) {
+      delta = delta + getValueLabel(deltaValues); 
+  }
+  barLabels.add(delta);
+  
+  String theta = "Theta\n";
+  if (mouseY<=height/2) {
+      theta = theta + getValueLabel(thetaValues); 
+  }
+  barLabels.add(theta);
+  
+  String lowAlpha = "Low Alpha\n";
+  if (mouseY<=height/2) {
+      lowAlpha = lowAlpha + getValueLabel(lowAlphaValues); 
+  }  
+  barLabels.add(lowAlpha);
+  
+  String highAlpha = "High Alpha";
+  if (mouseY<=height/2) {
+      highAlpha = highAlpha + getValueLabel(highAlphaValues); 
+  }
+  barLabels.add(highAlpha);
+  
+  String lowBeta = "Low Beta\n";
+  if (mouseY<=height/2) {
+      lowBeta = lowBeta + getValueLabel(lowBetaValues); 
+  }
+  barLabels.add(lowBeta);
+  
+  String highBeta = "High Beta\n";
+  if (mouseY<=height/2) {
+      highBeta = highBeta + getValueLabel(highBetaValues); 
+  }
+  barLabels.add(highBeta);
+  
+  String lowGamma = "Low Gamma\n";
+  if (mouseY<=height/2) {
+      lowGamma = lowGamma + getValueLabel(lowGammaValues); 
+  }
+  barLabels.add(lowGamma);
+  
+  String highGamma = "High Gamma\n";
+  if (mouseY<=height/2) {
+      highGamma = highGamma + getValueLabel(highGammaValues); 
+  }
+  barLabels.add(highGamma);
+
+  String rawEeg = "Raw EEG";
+  if (mouseY<=height/2) {
+      rawEeg = rawEeg + getValueLabel(rawEegValues); 
+  }
+  barLabels.add(rawEeg);
+
   float widthApart = width/11;
   float lineX = 0;
   for (int i=0; i<barLabels.size(); i++) {
@@ -167,6 +231,7 @@ void drawBarLabels() {
     int y = height/2 + 15;
     float x = ( (lineX + widthApart)-(lineX + textWidth) )/2 + lineX;
     text(label, x, y);
+    
     lineX = lineX + widthApart;
   }
 }
