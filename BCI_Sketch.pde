@@ -62,9 +62,24 @@ void draw() {
   drawBarGraph();
   if (mouseY <= height/2) {
     drawBarsForData(mouseX);
+    drawSignalQuality(mouseX);
   }
   drawBarLabels(); 
   drawMouseLine();
+}
+
+void drawSignalQuality(int _x) {
+  // draw box
+  int w = 140;
+  int h = 40;
+  noStroke();
+  fill(255,255,255);
+  rect(width-w-10,10,w,h);
+  
+  // text
+  fill(0,0,0);
+  text("Signal", width-w,30);
+  text("Quality", width-w,40);
 }
 
 void drawMouseLine() {
