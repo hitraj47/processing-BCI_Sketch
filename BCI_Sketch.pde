@@ -70,7 +70,7 @@ void draw() {
 
 void drawSignalQuality(int _x) {
   // draw box
-  int w = 140;
+  int w = 120;
   int h = 40;
   noStroke();
   fill(255,255,255);
@@ -78,8 +78,29 @@ void drawSignalQuality(int _x) {
   
   // text
   fill(0,0,0);
-  text("Signal", width-w,30);
-  text("Quality", width-w,40);
+  text("Signal", width-w,25);
+  text("Quality %", width-w,45);
+  
+  // circle thingy
+  noFill();
+  strokeWeight(1);
+  stroke(0, 0, 0);
+  int d = 30;
+  
+  int index = (int) map(_x,0, width, 0, poorSignalLevelValues.size());
+  int max = Collections.max(poorSignalLevelValues);
+  int min = Collections.min(poorSignalLevelValues);
+  int signalLevel = poorSignalLevelValues.get(index);
+  float signalPercent = signalLevel/max;
+  signalPercent = 1 - signalPercent;
+  float angle = 360*signalPercent;
+  arc(width-35,30,d,d,radians(-90),radians(angle-90));
+  
+  // text
+  String percent = nf((int)signalPercent*100,0,1);
+  textAlign(CENTER,CENTER);
+  text(percent,width-35,30);
+  textAlign(LEFT,BASELINE);
 }
 
 void drawMouseLine() {
@@ -110,6 +131,7 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
     // make sure to connect the previous point with the new point
     if (i > 0) {
       stroke(lineColor);
+      strokeWeight(1);
       line(prevx,prevy,x1,y1);
     }
     if (i+1 < values.size()) {
@@ -118,6 +140,7 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       float y2 = map(values.get(i), min, max, 0, height/2);
       y2 = height/2 - y2;
       stroke(lineColor);
+      strokeWeight(1);
       line(x1,y1,x2,y2);
       prevx = x2;
       prevy = y2;
