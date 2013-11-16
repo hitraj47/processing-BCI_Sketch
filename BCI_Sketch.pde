@@ -62,9 +62,41 @@ void draw() {
   drawBarGraph();
   if (mouseY <= height/2) {
     drawBarsForData(mouseX);
+    drawSignalQuality(mouseX);
   }
   drawBarLabels(); 
   drawMouseLine();
+}
+
+void drawSignalQuality(int _x) {
+  // draw box
+  int w = 120;
+  int h = 40;
+  noStroke();
+  fill(255,255,255);
+  rect(width-w-10,10,w,h);
+  
+  // text
+  fill(0,0,0);
+  text("Signal", width-w,25);
+  text("Quality", width-w,45);
+  
+  // circle thingy
+  noFill();
+  strokeWeight(1);
+  stroke(0, 0, 0);
+  int d = 30;
+  
+  int index = (int) map(_x,0, width, 0, poorSignalLevelValues.size());
+  int max = Collections.max(poorSignalLevelValues);
+  int min = Collections.min(poorSignalLevelValues);
+  int signalLevel = max - poorSignalLevelValues.get(index);
+  if (signalLevel > 25) {
+    fill(0,255,0);
+  } else {
+    fill(255,0,0);
+  }
+  ellipse(width-35,30,d,d);
 }
 
 void drawMouseLine() {
@@ -106,7 +138,7 @@ void drawLineOnGraph(ArrayList<Integer> values, color lineColor) {
       y2 = height/2 - y2;
       stroke(lineColor);
       strokeWeight(1);
-      line(x1, y1, x2, y2);
+      line(x1,y1,x2,y2);
       prevx = x2;
       prevy = y2;
     }
