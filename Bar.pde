@@ -56,7 +56,7 @@ class Bar {
   }
 
   public void setStroke(boolean tof) {
-    this.stroke = true;
+    this.stroke = tof;
   }
 
   public boolean isStroke() {
@@ -77,7 +77,7 @@ class Bar {
       noStroke();
     } 
     else {
-      strokeWeight(2);
+      strokeWeight(3);
       stroke(strokeColor);
     }
     rect(x, y, barWidth, barHeight);

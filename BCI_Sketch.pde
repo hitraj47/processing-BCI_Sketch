@@ -222,7 +222,7 @@ void drawBarsForData(int _x) {
   meditationBar.setBarColor(MEDITATION_COLOR);
   if (meditation > 60) {
     meditationBar.setStroke(true);
-    meditationBar.setStrokeColor(color(255,0,0));
+    meditationBar.setStrokeColor(color(0,0,255));
   } else {
     meditationBar.setStroke(false);
   }
